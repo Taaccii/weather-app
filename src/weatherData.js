@@ -10,7 +10,7 @@ export const processWeatherData = (rawData) => {
       icon: rawData.currentConditions.icon,
     },
 
-    daily: rawData.days.slice(0, 7).map((day) => ({
+    daily: rawData.days.slice(1, 8).map((day) => ({
       date: day.datetime,
       tempMax: day.tempmax,
       tempMin: day.tempmin,

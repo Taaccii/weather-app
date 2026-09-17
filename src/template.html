@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Weather App</title>
+</head>
+<body>
+  <header class="header">
+    <h1 class="app-title">Weather App</h1>
+
+    <form id="search-form" class="search-form">
+      <input
+        type="text"
+        id="search-input"
+        placeholder="Search a city"
+        required
+        autocomplete="off"
+      >
+      <button type="submit" id="search-button">Search</button>
+    </form>
+  </header>
+
+  <main class="main-container">
+
+    <div id="loading" class="loading hidden">
+      <p>Loading...</p>
+    </div>
+
+    <div id="error-message" class="error-message hidden"></div>
+
+    <section id="current-weather" class="current-weather">
+      <h2 id="location-name">--</h2>
+      <div class="weather-main">
+        <div id="weather-icon" class="weather-icon"></div>
+        <span id="current-temp" class="temp">--°C</span>
+      </div>
+      <p id="weather-condition" class="condition">--</p>
+
+      <div class="weather-details">
+        <p>Feels like: <span id="feels-like">--</span>°C</p>
+        <p>Humidity: <span id="humidity">--</span>%</p>
+        <p>Wind: <span id="wind-speed">--</span>Km/h</p>
+      </div>
+    </section>
+
+    <section class="forecast-section">
+      <h3>Forecast for the next few days</h3>
+      <div id="forecast-container" class="forecast-container"></div>
+    </section>
+  </main>
+
+</body>
+</html>

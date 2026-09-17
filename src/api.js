@@ -5,7 +5,8 @@ const API_KEY = 'RF4GR5UUBEWVJ8KJYCYHQHJLR';
 export const getWeatherData = async (location) => {
   try {
     const response = await fetch (
-      `https://weather.visualcrossing.com/VisualCrossingWebServices/rest/services/timeline/${location}?unitGroup=metric&key=${API_KEY}`,
+      // In api.js
+`https://weather.visualcrossing.com/VisualCrossingWebServices/rest/services/timeline/${encodeURIComponent(location)}?unitGroup=metric&key=${API_KEY}` ,
       { mode: 'cors' }
     );
 
@@ -13,8 +14,7 @@ export const getWeatherData = async (location) => {
       throw new Error(`Location not found (${response.status})`);
     }
 
-    const rawData = await response.json();
-    return processWeatherData(rawData);
+    return await response.json();
 
   } catch (error) {
     console.error('Error fetching weather data:', error);
