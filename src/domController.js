@@ -8,13 +8,26 @@ const forecastContainer = document.getElementById('forecast-container');
 const loadingElem = document.getElementById('loading');
 const errorElem = document.getElementById('error-message');
 
+const getIconUrl = (iconCode) => {
+  return `https://cdn.statically.io/gh/visualcrossing/WeatherIcons/main/SVG/1st%20Set%20-%20Color/${iconCode}.svg`;
+};
+
 export const renderCurrentWeather = (data) => {
   locationElem.textContent = data.location;
+  const dateObj = new Date(data.current.date || Date.now());
+  const options = { weekday: 'long', month: 'short', day: 'numeric' };
+  document.getElementById('current-date').textContent = dateObj.toLocaleDateString('en-US', options);
   tempElem.textContent = `${Math.round(data.current.temp)}°C`;
   conditionElem.textContent = data.current.conditions;
   feelsLikeElem.textContent = Math.round(data.current.feelsLike);
   humidityElem.textContent = Math.round(data.current.humidity);
   windElem.textContent = Math.round(data.current.windSpeed);
+
+  const iconImg = document.getElementById('weather-icon-img');
+  if (iconImg && data.current.icon) {
+    iconImg.src = getIconUrl(data.current.icon);
+    iconImg.alt = data.current.conditions;
+  }
 };
 
 export const renderForecast = (dailyData) => {
@@ -26,7 +39,14 @@ export const renderForecast = (dailyData) => {
 
     const dateElem = document.createElement('p');
     dateElem.classList.add('forecast-date');
-    dateElem.textContent = day.date;
+    const dateObj = new Date(day.date);
+    const options = { weekday: 'short', month: 'short', day: 'numeric' };
+    dateElem.textContent = dateObj.toLocaleDateString('en-US', options);
+
+    const iconImg = document.createElement('img');
+    iconImg.classList.add('forecast-icon');
+    iconImg.src = getIconUrl(day.icon);
+    iconImg.alt = day.conditions;
 
     const conditionElem = document.createElement('p');
     conditionElem.classList.add('forecast-condition');
@@ -44,7 +64,7 @@ export const renderForecast = (dailyData) => {
     minTempElem.textContent = `${Math.round(day.tempMin)}°C`;
 
     tempContainer.append(maxTempElem, minTempElem);
-    card.append(dateElem, conditionElem, tempContainer);
+    card.append(dateElem, iconImg, conditionElem, tempContainer);
     forecastContainer.append(card);
   });
 };
@@ -66,4 +86,11 @@ export const showError = (message) => {
 export const clearError = () => {
   errorElem.textContent = '';
   errorElem.classList.add('hidden');
+};
+
+export const updateBackground = (icon) => {
+  if (!icon) return;
+  
+  const iconName = icon.toLowerCase();
+  document.body.dataset.weather = iconName;
 };

@@ -6,7 +6,8 @@ import {
   renderForecast,
   toggleLoading,
   showError,
-  clearError
+  clearError,
+  updateBackground
 } from './domController.js';
 
 const searchForm = document.getElementById('search-form');
@@ -19,7 +20,7 @@ const handleSearch = async (location) => {
   try {
     const rawData = await getWeatherData(location);
     const cleanData = processWeatherData(rawData);
-
+    updateBackground(cleanData.current.icon);
     renderCurrentWeather(cleanData);
     renderForecast(cleanData.daily);
   } catch (err) {
