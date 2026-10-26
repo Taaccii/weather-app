@@ -42,4 +42,4 @@ searchForm.addEventListener('submit', (e) => {
   }
 });
 
-handleSearch('Rome');
+handleSearch('Roma, Italy');
